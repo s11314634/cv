@@ -31,24 +31,6 @@
             color: var(--text-color);
             line-height: 1.6;
             padding: 20px;
-            position: relative;
-        }
-
-        /* 🌊 全頁滿鋪浮水印（重複覆蓋整個螢幕） */
-        body::after {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-image: url('./favicon.ico');
-            background-repeat: repeat;
-            background-position: center;
-            background-size: 90px 90px; /* 浮水印圖示大小 */
-            opacity: 0.05; /* 透明度設定 */
-            pointer-events: none;
-            z-index: 9999;
         }
 
         .container {
@@ -59,8 +41,29 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
             overflow: hidden;
             padding: 40px;
+            position: relative; /* 浮水印相對定位 */
+        }
+
+        /* 🌊 修改：將浮水印放大並覆蓋整個頁面卡片（不重複） */
+        .container::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('./favicon.ico');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover; /* 等比例放大填滿整個頁面 */
+            opacity: 0.06; /* 調整透明度，確保文字清晰易讀 */
+            pointer-events: none; /* 防止遮擋文字與滑鼠點擊 */
+            z-index: 0;
+        }
+
+        header, section, .footer-note, .lang-switch {
             position: relative;
-            z-index: 1;
+            z-index: 1; /* 保證文字內容在浮水印上方 */
         }
         
         /* Language Switcher Button */
@@ -74,7 +77,6 @@
             padding: 4px;
             border-radius: 20px;
             border: 1px solid var(--border-color);
-            z-index: 10;
         }
 
         .lang-btn {
@@ -109,7 +111,7 @@
             flex-wrap: wrap;
         }
 
-        /* 🔴 正圓形 Icon，無框線、變形 */
+        /* 🔴 正圓形 Icon，無外邊框 */
         .header-icon {
             width: 56px;
             height: 56px;
@@ -272,6 +274,7 @@
         <!-- Header -->
         <header>
             <div class="header-profile">
+                <!-- 正圓形小圖示 -->
                 <img src="favicon.ico" alt="Icon" class="header-icon" onerror="this.style.display='none'">
                 <div class="header-titles">
                     <h1>So Tat Shing</h1>
@@ -468,7 +471,7 @@
             <h2 data-lang="en">Additional Information</h2>
 
             <p data-lang="zh"><strong>語言能力：</strong> 粵語（母語）、英語（基本溝通 / 懂讀寫）、中文（基本溝通 / 懂讀寫）</p>
-            <p data-lang="en"><strong>Languages:</strong> Cantonese (Native), English (Basic communication / Professional reading & writing), Chinese (Basic communication / Professional reading & writing)</p>
+            <p data-lang="en"><strong>Languages:</strong> Cantonese (Native), English (Basic communication / Professional reading & writing), Mandarin (Basic communication)</p>
 
             <p data-lang="zh"><strong>期望薪資：</strong> 面議</p>
             <p data-lang="en"><strong>Expected Salary:</strong> Negotiable</p>
