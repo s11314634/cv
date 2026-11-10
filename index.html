@@ -62,52 +62,17 @@
             margin: 0 auto;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
         }
 
-        /* 📍 Row 1: 強制最左上角與最右上角兩端對齊 */
+        /* 📍 Row 1: 最頂層放置通訊軟體（全寬置中排列） */
         .header-top-row {
             display: flex;
-            justify-content: space-between; /* 左右對齊關鍵 */
+            justify-content: center;
             align-items: center;
+            gap: 6px;
             width: 100%;
-        }
-
-        /* 🌐 最左上角：中英切換按鈕 */
-        .lang-switch {
-            display: flex;
-            gap: 2px;
-            background: rgba(248, 249, 250, 0.9);
-            padding: 2px;
-            border-radius: 20px;
-            border: 1px solid var(--border-color);
-            flex-shrink: 0;
-        }
-
-        .lang-btn {
-            border: none;
-            background: none;
-            padding: 3px 9px;
-            border-radius: 15px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 0.8rem;
-            color: var(--light-text);
-            transition: all 0.3s ease;
-        }
-
-        .lang-btn.active {
-            background-color: var(--accent-color);
-            color: #ffffff;
-        }
-
-        /* 👉 最右上角：圓形通訊圖示群組 */
-        .header-right-social {
-            display: flex;
-            align-items: center;
-            gap: 4px;
             flex-wrap: wrap;
-            justify-content: flex-end;
         }
 
         .social-link-item {
@@ -118,7 +83,7 @@
             color: var(--primary-color);
             font-size: 0.75rem;
             font-weight: 600;
-            padding: 2px 7px 2px 2px;
+            padding: 3px 8px 3px 3px;
             border-radius: 20px;
             background-color: rgba(248, 249, 250, 0.9);
             border: 1px solid var(--border-color);
@@ -148,16 +113,23 @@
         .btn-whatsapp { background-color: #25D366; }
         .btn-email { background-color: #e74c3c; }
 
-        /* 📍 Row 2: 正圓形 Icon + 中英文姓名 */
+        /* 📍 Row 2: 左邊中英文名 + Icon，右邊「繁／EN」切換按鈕 */
         .header-bottom-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .header-profile-left {
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
         .header-icon {
-            width: 38px;
-            height: 38px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             object-fit: cover;
             border: none;
@@ -181,6 +153,34 @@
             font-weight: normal;
         }
 
+        /* 🌐 右側中英切換按鈕 */
+        .lang-switch {
+            display: flex;
+            gap: 2px;
+            background: rgba(248, 249, 250, 0.9);
+            padding: 2px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            flex-shrink: 0;
+        }
+
+        .lang-btn {
+            border: none;
+            background: none;
+            padding: 3px 9px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.8rem;
+            color: var(--light-text);
+            transition: all 0.3s ease;
+        }
+
+        .lang-btn.active {
+            background-color: var(--accent-color);
+            color: #ffffff;
+        }
+
         /* 主內容卡片容器 */
         .container {
             width: 100%;
@@ -191,7 +191,7 @@
             overflow: hidden;
             padding: 30px;
             position: relative;
-            margin-top: 110px; /* 留出懸浮列空間 */
+            margin-top: 115px; /* 為 2-Row 懸浮 Header 留出空間 */
             margin-bottom: 30px;
         }
 
@@ -313,7 +313,7 @@
             padding-top: 12px;
         }
 
-        /* 🌐 雙語切換控制邏輯 (修正切換問題) */
+        /* 🌐 雙語切換控制邏輯 */
         .lang-en [data-lang="zh"] { display: none !important; }
         .lang-en [data-lang="en"] { display: block !important; }
 
@@ -326,9 +326,9 @@
 
         /* 手機流動版微調 */
         @media (max-width: 480px) {
-            .container { padding: 18px; margin-top: 135px; border-radius: 0; }
-            .social-link-item span:not(.social-btn-icon) { font-size: 0.7rem; }
-            .header-right-social { gap: 3px; }
+            .container { padding: 18px; margin-top: 125px; border-radius: 0; }
+            .header-top-row { gap: 4px; }
+            .social-link-item { padding: 2px 6px 2px 2px; font-size: 0.7rem; }
         }
     </style>
 </head>
@@ -337,54 +337,53 @@
     <!-- 📌 置頂滿版 2-Row 半透明懸浮 Header -->
     <header>
         <div class="header-container">
-            <!-- Row 1: 最左上角 (繁/EN) | 最右上角 (通訊軟體圖示+名稱) -->
+            <!-- Row 1: 最頂層放置通訊軟體 (Telegram, LINE, WhatsApp, Email) -->
             <div class="header-top-row">
-                <!-- 🌐 最左上角：中英切換按鈕 -->
+                <!-- Telegram -->
+                <a href="https://t.me/@jomak9" target="_blank" class="social-link-item">
+                    <span class="social-btn-icon btn-telegram">
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.03-1.99 1.27-5.62 3.72-.53.36-1.01.54-1.44.53-.47-.01-1.38-.26-2.06-.48-.83-.27-1.49-.42-1.43-.89.03-.25.38-.51 1.08-.78 4.23-1.84 7.05-3.05 8.46-3.63 4.02-1.67 4.85-1.96 5.39-1.97.12 0 .39.03.56.17.14.12.18.28.2.4-.02.07-.02.2-.04.33z"/></svg>
+                    </span>
+                    <span>Telegram</span>
+                </a>
+
+                <!-- LINE -->
+                <a href="https://line.me/ti/p/oshing" target="_blank" class="social-link-item">
+                    <span class="social-btn-icon btn-line">
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.41-.09-.544-.25l-2.65-3.155v2.778c0 .349-.281.63-.63.63-.349 0-.63-.281-.63-.63V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.211 0 .41.09.545.25l2.65 3.153V8.108c0-.345.282-.63.63-.63.345 0 .627.285.627.63v4.771zm-9.341.63H4.63c-.349 0-.63-.285-.63-.629V8.108c0-.345.281-.63.63-.63.349 0 .63.285.63.63v4.141h1.125c.349 0 .63.283.63.63 0 .344-.281.629-.63.629zm3.033-4.771c.349 0 .63.285.63.63v4.141c0 .344-.281.629-.63.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63zM2.001 12.025C2.001 6.49 6.49 2 12.025 2c5.535 0 10.024 4.49 10.024 10.025 0 5.535-4.489 10.024-10.024 10.024-1.332 0-2.62-.258-3.834-.739l-3.524 1.175 1.175-3.524c-.481-1.214-.739-2.502-.739-3.834z"/></svg>
+                    </span>
+                    <span>LINE</span>
+                </a>
+
+                <!-- WhatsApp -->
+                <a href="https://wa.me/85269281058" target="_blank" class="social-link-item">
+                    <span class="social-btn-icon btn-whatsapp">
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                    </span>
+                    <span>WhatsApp</span>
+                </a>
+
+                <!-- Email -->
+                <a href="mailto:s11314634@gm.cyut.edu.tw" class="social-link-item">
+                    <span class="social-btn-icon btn-email">📧</span>
+                    <span>Email</span>
+                </a>
+            </div>
+
+            <!-- Row 2: 左邊中英文名 + Icon | 右邊「繁／EN」按鈕 -->
+            <div class="header-bottom-row">
+                <div class="header-profile-left">
+                    <img src="favicon.ico" alt="Icon" class="header-icon" onerror="this.style.display='none'">
+                    <div class="header-titles">
+                        <h1>So Tat Shing</h1>
+                        <div class="name-zh">蘇達誠</div>
+                    </div>
+                </div>
+
+                <!-- 🌐 最右側切換按鈕 -->
                 <div class="lang-switch">
                     <button class="lang-btn active" id="btn-zh" onclick="setLanguage('zh')">繁</button>
                     <button class="lang-btn" id="btn-en" onclick="setLanguage('en')">EN</button>
-                </div>
-
-                <!-- 👉 最右上角：通訊軟體 (Telegram, LINE, WhatsApp, Email) -->
-                <div class="header-right-social">
-                    <!-- Telegram -->
-                    <a href="https://t.me/@jomak9" target="_blank" class="social-link-item">
-                        <span class="social-btn-icon btn-telegram">
-                            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.03-1.99 1.27-5.62 3.72-.53.36-1.01.54-1.44.53-.47-.01-1.38-.26-2.06-.48-.83-.27-1.49-.42-1.43-.89.03-.25.38-.51 1.08-.78 4.23-1.84 7.05-3.05 8.46-3.63 4.02-1.67 4.85-1.96 5.39-1.97.12 0 .39.03.56.17.14.12.18.28.2.4-.02.07-.02.2-.04.33z"/></svg>
-                        </span>
-                        <span>Telegram</span>
-                    </a>
-
-                    <!-- LINE -->
-                    <a href="https://line.me/ti/p/oshing" target="_blank" class="social-link-item">
-                        <span class="social-btn-icon btn-line">
-                            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.41-.09-.544-.25l-2.65-3.155v2.778c0 .349-.281.63-.63.63-.349 0-.63-.281-.63-.63V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.211 0 .41.09.545.25l2.65 3.153V8.108c0-.345.282-.63.63-.63.345 0 .627.285.627.63v4.771zm-9.341.63H4.63c-.349 0-.63-.285-.63-.629V8.108c0-.345.281-.63.63-.63.349 0 .63.285.63.63v4.141h1.125c.349 0 .63.283.63.63 0 .344-.281.629-.63.629zm3.033-4.771c.349 0 .63.285.63.63v4.141c0 .344-.281.629-.63.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63zM2.001 12.025C2.001 6.49 6.49 2 12.025 2c5.535 0 10.024 4.49 10.024 10.025 0 5.535-4.489 10.024-10.024 10.024-1.332 0-2.62-.258-3.834-.739l-3.524 1.175 1.175-3.524c-.481-1.214-.739-2.502-.739-3.834z"/></svg>
-                        </span>
-                        <span>LINE</span>
-                    </a>
-
-                    <!-- WhatsApp -->
-                    <a href="https://wa.me/85269281058" target="_blank" class="social-link-item">
-                        <span class="social-btn-icon btn-whatsapp">
-                            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
-                        </span>
-                        <span>WhatsApp</span>
-                    </a>
-
-                    <!-- Email -->
-                    <a href="mailto:s11314634@gm.cyut.edu.tw" class="social-link-item">
-                        <span class="social-btn-icon btn-email">📧</span>
-                        <span>Email</span>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Row 2: 圓形 Icon + 中英文姓名 -->
-            <div class="header-bottom-row">
-                <img src="favicon.ico" alt="Icon" class="header-icon" onerror="this.style.display='none'">
-                <div class="header-titles">
-                    <h1>So Tat Shing</h1>
-                    <div class="name-zh">蘇達誠</div>
                 </div>
             </div>
         </div>
@@ -395,8 +394,8 @@
         <section>
             <h2 data-lang="zh">個人簡介</h2>
             <h2 data-lang="en">Professional Summary</h2>
-            <p data-lang="zh">擁有 7 年全職學校 IT 支援與網路管理經驗的資訊科技工作者，具備資訊管理與工程學背景。剛於 2026 年 6 月碩士畢業，現正待業。研究主力為大型語言模型 (LLM)、FinBERT 與金融情緒分析。具備實際的技術故障排除、問題解決與分析能力，工作態度認真負責。</p>
-            <p data-lang="en">IT professional with over 7 years of full-time school IT support and network management experience, backed by a background in Information Management and Engineering. Recently graduated with a Master's degree in June 2026 and currently available for employment. Research focus centers on Large Language Models (LLMs), FinBERT, and financial sentiment analysis. Possesses practical technical troubleshooting, problem-solving, and analytical skills, with a dedicated and responsible work attitude.</p>
+            <p data-lang="zh">擁有 7 年全職學校 IT 支援與網路管理經驗的資訊科技工作者，具備資訊管理與工程學背景。剛於 2026 年 6 月碩士畢業，現正待業。研究主力為大型語言模型 (LLM)、FinBERT 與金融情緒分析。具備實際的技術故障排除、問題解決與分析能力，工作態度認真負責。[cite: 2]</p>
+            <p data-lang="en">IT professional with over 7 years of full-time school IT support and network management experience, backed by a background in Information Management and Engineering. Recently graduated with a Master's degree in June 2026 and currently available for employment. Research focus centers on Large Language Models (LLMs), FinBERT, and financial sentiment analysis. Possesses practical technical troubleshooting, problem-solving, and analytical skills, with a dedicated and responsible work attitude.[cite: 2]</p>
         </section>
 
         <!-- Education -->
@@ -410,7 +409,7 @@
                     <span class="item-date">2024 – 2026 (2026年6月畢業)</span>
                 </div>
                 <div class="item-header" data-lang="en">
-                    <span class="item-title">Chaoyang University of Technology - Master of Information Management</span>
+                    <span class="item-title">Chaoyang University of Technology - Master of Information Management</span>[cite: 2]
                     <span class="item-date">2024 – 2026 (Graduated June 2026)</span>
                 </div>
             </div>
@@ -421,41 +420,41 @@
                     <span class="item-date">2022 – 2024</span>
                 </div>
                 <div class="item-header" data-lang="en">
-                    <span class="item-title">Chaoyang University of Technology - Bachelor of Information and Communication Engineering</span>
+                    <span class="item-title">Chaoyang University of Technology - Bachelor of Information and Communication Engineering</span>[cite: 2]
                     <span class="item-date">2022 – 2024</span>
                 </div>
             </div>
 
             <div class="item">
                 <div class="item-header" data-lang="zh">
-                    <span class="item-title">香港專業教育學院（沙田） - 網路及流動電腦高級文憑</span>
-                    <span class="item-date">2011 – 2015</span>
+                    <span class="item-title">香港專業教育學院（沙田） - 網路及流動電腦高級文憑</span>[cite: 2]
+                    <span class="item-date">2011 – 2015</span>[cite: 2]
                 </div>
                 <div class="item-header" data-lang="en">
-                    <span class="item-title">Hong Kong Institute of Vocational Education (Sha Tin) - Higher Diploma in Network and Mobile Computing</span>
-                    <span class="item-date">2011 – 2015</span>
+                    <span class="item-title">Hong Kong Institute of Vocational Education (Sha Tin) - Higher Diploma in Network and Mobile Computing</span>[cite: 2]
+                    <span class="item-date">2011 – 2015</span>[cite: 2]
                 </div>
             </div>
 
             <div class="item">
                 <div class="item-header" data-lang="zh">
-                    <span class="item-title">香港專業教育學院（沙田） - 商業資訊科技高級文憑（網頁設計及開發）</span>
-                    <span class="item-date">2008 – 2011</span>
+                    <span class="item-title">香港專業教育學院（沙田） - 商業資訊科技高級文憑（網頁設計及開發）</span>[cite: 2]
+                    <span class="item-date">2008 – 2011</span>[cite: 2]
                 </div>
                 <div class="item-header" data-lang="en">
-                    <span class="item-title">Hong Kong Institute of Vocational Education (Sha Tin) - Higher Diploma in IT for Business (Web Design & Development)</span>
-                    <span class="item-date">2008 – 2011</span>
+                    <span class="item-title">Hong Kong Institute of Vocational Education (Sha Tin) - Higher Diploma in IT for Business (Web Design & Development)</span>[cite: 2]
+                    <span class="item-date">2008 – 2011</span>[cite: 2]
                 </div>
             </div>
 
             <div class="item">
                 <div class="item-header" data-lang="zh">
-                    <span class="item-title">地利亞修女紀念學校（月華） - 香港中學會考 (HKCEE)</span>
-                    <span class="item-date">2006 – 2008</span>
+                    <span class="item-title">地利亞修女紀念學校（月華） - 香港中學會考 (HKCEE)</span>[cite: 2]
+                    <span class="item-date">2006 – 2008</span>[cite: 2]
                 </div>
                 <div class="item-header" data-lang="en">
-                    <span class="item-title">Delia Memorial School (Yuet Wah) - HKCEE</span>
-                    <span class="item-date">2006 – 2008</span>
+                    <span class="item-title">Delia Memorial School (Yuet Wah) - HKCEE</span>[cite: 2]
+                    <span class="item-date">2006 – 2008</span>[cite: 2]
                 </div>
             </div>
         </section>
@@ -467,45 +466,45 @@
 
             <div class="item">
                 <div class="item-header" data-lang="zh">
-                    <span class="item-title">香港道教聯合會青松中學</span>
-                    <span class="item-date">2015 – 2022</span>
+                    <span class="item-title">香港道教聯合會青松中學</span>[cite: 2]
+                    <span class="item-date">2015 – 2022</span>[cite: 2]
                 </div>
                 <div class="item-header" data-lang="en">
-                    <span class="item-title">The Hong Kong Taoist Association Ching Chung Secondary School</span>
-                    <span class="item-date">2015 – 2022</span>
+                    <span class="item-title">The Hong Kong Taoist Association Ching Chung Secondary School</span>[cite: 2]
+                    <span class="item-date">2015 – 2022</span>[cite: 2]
                 </div>
-                <div class="item-subtitle" data-lang="zh">全職 IT 助理</div>
-                <div class="item-subtitle" data-lang="en">Full-Time IT Assistant</div>
+                <div class="item-subtitle" data-lang="zh">全職 IT 助理</div>[cite: 2]
+                <div class="item-subtitle" data-lang="en">Full-Time IT Assistant</div>[cite: 2]
                 <ul data-lang="zh">
-                    <li>為資訊科技提供技術支援，確保學校電腦系統與網路的日常運作順暢。</li>
-                    <li>協助教師與學生處理硬體、軟體及網路故障排除。</li>
-                    <li>管理日常 IT 維護工作，並執行學校行政指派的其他營運職責。</li>
+                    <li>為資訊科技提供技術支援，確保學校電腦系統與網路的日常運作順暢[cite: 2]。</li>
+                    <li>協助教師與學生處理硬體、軟體及網路故障排除[cite: 2]。</li>
+                    <li>管理日常 IT 維護工作，並執行學校行政指派的其他營運職責[cite: 2]。</li>
                 </ul>
                 <ul data-lang="en">
-                    <li>Provided technical support for IT unit, ensuring smooth daily operations of school computer systems and networks.</li>
-                    <li>Assisted teachers and students with hardware, software, and network troubleshooting.</li>
-                    <li>Managed routine IT maintenance tasks and executed operational duties assigned by administration.</li>
+                    <li>Provided technical support for IT unit, ensuring smooth daily operations of school computer systems and networks.[cite: 2]</li>
+                    <li>Assisted teachers and students with hardware, software, and network troubleshooting.[cite: 2]</li>
+                    <li>Managed routine IT maintenance tasks and executed operational duties assigned by administration.[cite: 2]</li>
                 </ul>
             </div>
 
             <div class="item">
                 <div class="item-header" data-lang="zh">
-                    <span class="item-title">藝安物業及護衛服務有限公司</span>
-                    <span class="item-date">2008 – 2015</span>
+                    <span class="item-title">藝安物業及護衛服務有限公司</span>[cite: 2]
+                    <span class="item-date">2008 – 2015</span>[cite: 2]
                 </div>
                 <div class="item-header" data-lang="en">
-                    <span class="item-title">Star Security</span>
-                    <span class="item-date">2008 – 2015</span>
+                    <span class="item-title">Star Security</span>[cite: 2]
+                    <span class="item-date">2008 – 2015</span>[cite: 2]
                 </div>
-                <div class="item-subtitle" data-lang="zh">兼職保安員</div>
-                <div class="item-subtitle" data-lang="en">Part-Time Security Guard</div>
+                <div class="item-subtitle" data-lang="zh">兼職保安員</div>[cite: 2]
+                <div class="item-subtitle" data-lang="en">Part-Time Security Guard</div>[cite: 2]
                 <ul data-lang="zh">
-                    <li>以專業態度處理客戶查詢並維持安全環境。</li>
-                    <li>在壓力下有效解決安全與營運問題，展現出高度的責任感與信賴度。</li>
+                    <li>以專業態度處理客戶查詢並維持安全環境[cite: 2]。</li>
+                    <li>在壓力下有效解決安全與營運問題，展現出高度的責任感與信賴度[cite: 2]。</li>
                 </ul>
                 <ul data-lang="en">
-                    <li>Handled customer inquiries professionally and maintained a secure environment.</li>
-                    <li>Resolved security and operational issues under pressure, demonstrating strong responsibility and reliability.</li>
+                    <li>Handled customer inquiries professionally and maintained a secure environment.[cite: 2]</li>
+                    <li>Resolved security and operational issues under pressure, demonstrating strong responsibility and reliability.[cite: 2]</li>
                 </ul>
             </div>
         </section>
@@ -515,10 +514,10 @@
             <h2 data-lang="zh">專業資格</h2>
             <h2 data-lang="en">Professional Qualifications</h2>
             <ul>
-                <li><strong>2015:</strong> CCNA Network Routing - Pass</li>
-                <li><strong>2013:</strong> CCNA LAN Switching and Wireless - Pass</li>
-                <li><strong>2012:</strong> CCNA Network Fundamentals - Pass</li>
-                <li><strong>2011:</strong> CCNA Hardware and Software - Pass</li>
+                <li><strong>2015:</strong> CCNA Network Routing - Pass[cite: 2]</li>
+                <li><strong>2013:</strong> CCNA LAN Switching and Wireless - Pass[cite: 2]</li>
+                <li><strong>2012:</strong> CCNA Network Fundamentals - Pass[cite: 2]</li>
+                <li><strong>2011:</strong> CCNA Hardware and Software - Pass[cite: 2]</li>
             </ul>
         </section>
 
@@ -530,41 +529,41 @@
                 <div class="skill-category">
                     <div data-lang="zh">
                         <strong>程式開發</strong>
-                        Python, PHP, SQL, iOS/Android App 開發
+                        Python, PHP, SQL, iOS/Android App 開發[cite: 2]
                     </div>
                     <div data-lang="en">
                         <strong>Programming & Dev</strong>
-                        Python, PHP, SQL, iOS/Android App Development
+                        Python, PHP, SQL, iOS/Android App Development[cite: 2]
                     </div>
                 </div>
                 <div class="skill-category">
                     <div data-lang="zh">
                         <strong>AI 與數據</strong>
-                        機器學習, LLMs, NLP, LoRA 微調, RAG
+                        機器學習, LLMs, NLP, LoRA 微調, RAG[cite: 2]
                     </div>
                     <div data-lang="en">
                         <strong>AI & Data</strong>
-                        Machine Learning, LLMs, NLP, LoRA Fine-tuning, RAG
+                        Machine Learning, LLMs, NLP, LoRA Fine-tuning, RAG[cite: 2]
                     </div>
                 </div>
                 <div class="skill-category">
                     <div data-lang="zh">
                         <strong>網路與系統</strong>
-                        路由與交換, 硬體與軟體支援, CCNA 認證
+                        路由與交換, 硬體與軟體支援, CCNA 認證[cite: 2]
                     </div>
                     <div data-lang="en">
                         <strong>Networking & Systems</strong>
-                        Routing & Switching, Hardware & Software Support, CCNA Certified
+                        Routing & Switching, Hardware & Software Support, CCNA Certified[cite: 2]
                     </div>
                 </div>
                 <div class="skill-category">
                     <div data-lang="zh">
                         <strong>辦公室應用</strong>
-                        Microsoft Office (Word, Excel, PowerPoint)
+                        Microsoft Office (Word, Excel, PowerPoint)[cite: 2]
                     </div>
                     <div data-lang="en">
                         <strong>Office Applications</strong>
-                        Microsoft Office (Word, Excel, PowerPoint)
+                        Microsoft Office (Word, Excel, PowerPoint)[cite: 2]
                     </div>
                 </div>
             </div>
@@ -575,14 +574,14 @@
             <h2 data-lang="zh">其他資訊</h2>
             <h2 data-lang="en">Additional Information</h2>
 
-            <p data-lang="zh"><strong>語言能力：</strong> 粵語（母語）、英語（基本溝通 / 懂讀寫）、中文（基本溝通 / 懂讀寫）</p>
-            <p data-lang="en"><strong>Languages:</strong> Cantonese (Native), English (Basic communication / Professional reading & writing), Mandarin (Basic communication)</p>
+            <p data-lang="zh"><strong>語言能力：</strong> 粵語（母語）、英語（基本溝通 / 懂讀寫）、中文（基本溝通 / 懂讀寫）</p>[cite: 2]
+            <p data-lang="en"><strong>Languages:</strong> Cantonese (Native), English (Basic communication / Professional reading & writing), Mandarin (Basic communication)</p>[cite: 2]
 
-            <p data-lang="zh"><strong>期望薪資：</strong> 面議</p>
-            <p data-lang="en"><strong>Expected Salary:</strong> Negotiable</p>
+            <p data-lang="zh"><strong>期望薪資：</strong> 面議</p>[cite: 2]
+            <p data-lang="en"><strong>Expected Salary:</strong> Negotiable</p>[cite: 2]
 
-            <p data-lang="zh"><strong>碩士論文：</strong> <a href="https://hdl.handle.net/11296/3724ts" target="_blank">大型語言模型與 FinBERT 在中文加密貨幣新聞標題情緒分析之比較研究</a></p>
-            <p data-lang="en"><strong>Master's Thesis:</strong> <a href="https://hdl.handle.net/11296/3724ts" target="_blank">A Comparative Study of LLMs and FinBERT for Sentiment Analysis of Chinese Cryptocurrency News Headlines</a></p>
+            <p data-lang="zh"><strong>碩士論文：</strong> <a href="https://hdl.handle.net/11296/3724ts" target="_blank">大型語言模型與 FinBERT 在中文加密貨幣新聞標題情緒分析之比較研究</a></p>[cite: 2]
+            <p data-lang="en"><strong>Master's Thesis:</strong> <a href="https://hdl.handle.net/11296/3724ts" target="_blank">A Comparative Study of LLMs and FinBERT for Sentiment Analysis of Chinese Cryptocurrency News Headlines</a></p>[cite: 2]
         </section>
 
         <div class="footer-note">
