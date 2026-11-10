@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>So Tat Shing (蘇達誠)</title>
 
-	<!--icon-->
+    <!-- 網頁標籤頁圖示 (Favicon) -->
 	<link rel="icon" type="image/x-icon" href="favicon.ico">
 	
     <style>
@@ -44,6 +44,34 @@
             position: relative;
         }
 
+        /* -------------------------------------------------- */
+        /* 🌊 方案一：背景浮水印 (Background Watermark) CSS */
+        /* -------------------------------------------------- */
+        .container::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300px;
+            height: 300px;
+            /* 預設使用你的 favicon.ico 作為背景浮水印圖案 */
+            background-image: url('favicon.ico');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+            /* 將圖樣旋轉並極大幅度淡化（Opacity 0.04），確保不影響文字閱讀 */
+            transform: translate(-50%, -50%) rotate(-15deg);
+            opacity: 0.04;
+            pointer-events: none; /* 防止遮擋文字導致無法點擊或複製 */
+            z-index: 0;
+        }
+
+        /* 確保所有文字區塊在浮水印之上 */
+        header, section, .footer-note, .lang-switch {
+            position: relative;
+            z-index: 1;
+        }
+		
         /* Language Switcher Button */
         .lang-switch {
             position: absolute;
@@ -82,10 +110,24 @@
             margin-top: 10px;
         }
 
+        /* -------------------------------------------------- */
+        /* 📍 方案二：標題旁邊加小圖示 (Header Icon) CSS     */
+        /* -------------------------------------------------- */
         h1 {
             font-size: 2rem;
             color: var(--primary-color);
             margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .header-icon {
+            width: 32px;
+            height: 32px;
+            vertical-align: middle;
+            border-radius: 6px;
         }
 
         .contact-info {
