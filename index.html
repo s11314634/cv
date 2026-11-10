@@ -89,14 +89,15 @@
             gap: 4px;
             text-decoration: none;
             color: var(--primary-color);
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 600;
-            padding: 3px 8px 3px 3px;
+            padding: 2px 6px 2px 2px;
             border-radius: 20px;
             background-color: rgba(248, 249, 250, 0.9);
             border: 1px solid var(--border-color);
             transition: all 0.2s ease;
             white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .social-link-item:hover {
@@ -334,9 +335,17 @@
 
         /* 手機流動版微調 */
         @media (max-width: 480px) {
-            .container { padding: 18px; margin-top: 125px; border-radius: 0; }
-            .header-top-row { gap: 4px; }
-            .social-link-item { padding: 2px 6px 2px 2px; font-size: 0.7rem; }
+            header {
+                padding: 10px 12px;     /* 膠囊兩邊留多啲空間俾內容 */
+            }
+            .social-link-item {
+                font-size: 0.65rem;     /* 手機版再微調細少少 */
+                padding: 2px 5px 2px 2px;
+            }
+            .social-btn-icon {
+                width: 18px;            /* 圓形圖示微調至 18px */
+                height: 18px;
+            }
         }
     </style>
 </head>
