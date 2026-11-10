@@ -1,4 +1,4 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-HK">
 <head>
     <meta charset="UTF-8">
@@ -6,8 +6,8 @@
     <title>So Tat Shing (蘇達誠)</title>
 
     <!-- 網頁標籤頁圖示 (Favicon) -->
-	<link rel="icon" type="image/x-icon" href="favicon.ico">
-	
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    
     <style>
         :root {
             --primary-color: #2c3e50;
@@ -25,17 +25,26 @@
             padding: 0;
         }
 
+        /* 停用文字選取 */
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Microsoft JhengHei", sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
             line-height: 1.6;
             padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
 
         .container {
+            width: 100%;
             max-width: 800px;
-            margin: 0 auto;
             background-color: var(--card-bg);
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
@@ -44,45 +53,40 @@
             position: relative;
         }
 
-        /* -------------------------------------------------- */
-        /* 🌊 方案一：背景浮水印 (Background Watermark) CSS */
-        /* -------------------------------------------------- */
+        /* 🌊 全頁高清向量浮水印 */
         .container::after {
             content: "";
             position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 300px;
-            height: 300px;
-            /* 預設使用你的 favicon.ico 作為背景浮水印圖案 */
-            background-image: url('favicon.ico');
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 100 100'><text x='50%' y='50%' font-size='42' font-family='Arial, sans-serif' font-weight='bold' fill='%233498db' dominant-baseline='middle' text-anchor='middle' transform='rotate(-15 50 50)'>STS</text></svg>");
             background-repeat: no-repeat;
-            background-position: center;
-            background-size: contain;
-            /* 將圖樣旋轉並極大幅度淡化（Opacity 0.04），確保不影響文字閱讀 */
-            transform: translate(-50%, -50%) rotate(-15deg);
-            opacity: 0.04;
-            pointer-events: none; /* 防止遮擋文字導致無法點擊或複製 */
+            background-position: center center;
+            background-size: 60% auto;
+            opacity: 0.07;
+            pointer-events: none;
             z-index: 0;
         }
 
-        /* 確保所有文字區塊在浮水印之上 */
         header, section, .footer-note, .lang-switch {
             position: relative;
             z-index: 1;
         }
-		
-        /* Language Switcher Button */
+        
+        /* 🌐 語言切換按鈕 */
         .lang-switch {
             position: absolute;
             top: 20px;
             right: 20px;
             display: flex;
             gap: 5px;
-            background: var(--bg-color);
+            background: rgba(248, 249, 250, 0.8);
             padding: 4px;
             border-radius: 20px;
             border: 1px solid var(--border-color);
+            z-index: 10;
         }
 
         .lang-btn {
@@ -102,43 +106,94 @@
             color: #ffffff;
         }
 
+        /* 📌 半透明浮動 Header */
         header {
-            text-align: center;
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border-bottom: 2px solid var(--border-color);
-            padding-bottom: 25px;
+            padding: 15px 0 20px 0;
             margin-bottom: 30px;
-            margin-top: 10px;
+            z-index: 5;
         }
 
-        /* -------------------------------------------------- */
-        /* 📍 方案二：標題旁邊加小圖示 (Header Icon) CSS     */
-        /* -------------------------------------------------- */
-        h1 {
-            font-size: 2rem;
-            color: var(--primary-color);
-            margin-bottom: 10px;
+        .header-profile {
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 10px;
+            gap: 16px;
+            flex-wrap: wrap;
         }
 
         .header-icon {
-            width: 32px;
-            height: 32px;
-            vertical-align: middle;
-            border-radius: 6px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: none;
+            display: block;
+        }
+
+        .header-titles {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 2px;
+        }
+
+        .name-zh {
+            font-size: 1.2rem;
+            color: var(--light-text);
+            font-weight: normal;
         }
 
         .contact-info {
             display: flex;
             flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
+            gap: 12px;
             font-size: 0.95rem;
             color: var(--light-text);
-            margin-top: 10px;
+            margin-top: 12px;
+            align-items: center;
         }
+
+        /* 💬 通訊軟體官方色彩圖示按鈕樣式 */
+        .social-icons {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            color: #ffffff;
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: transform 0.2s, opacity 0.2s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+        }
+
+        .social-btn:hover {
+            transform: scale(1.1);
+            opacity: 0.9;
+            text-decoration: none;
+        }
+
+        /* 各大通訊軟體官方品牌色 */
+        .btn-telegram { background-color: #229ED9; }
+        .btn-line { background-color: #06C755; }
+        .btn-whatsapp { background-color: #25D366; }
 
         section {
             margin-bottom: 30px;
@@ -215,6 +270,7 @@
             margin-bottom: 5px;
             color: var(--primary-color);
             font-size: 0.95rem;
+            line-height: 1.4;
         }
 
         a {
@@ -235,33 +291,56 @@
             padding-top: 15px;
         }
 
-        /* Language Toggle Display Rules */
-        [data-lang="en"] { display: none; }
-        .lang-en [data-lang="zh"] { display: none; }
-        .lang-en [data-lang="en"] { display: block; }
+        /* 🌐 雙語切換邏輯 */
+        [data-lang="en"] { display: none !important; }
+        .lang-en [data-lang="zh"] { display: none !important; }
+        .lang-en [data-lang="en"] { display: block !important; }
+        
+        .item-header [data-lang="en"] { display: none; }
+        .lang-en .item-header [data-lang="zh"] { display: none; }
+        .lang-en .item-header [data-lang="en"] { display: flex; width: 100%; justify-content: space-between; }
 
         @media (max-width: 600px) {
-            .container { padding: 20px; }
-            h1 { font-size: 1.6rem; }
-            .lang-switch { position: relative; top: 0; right: 0; justify-content: center; margin-bottom: 15px; }
+            body { padding: 0; }
+            .container { padding: 20px; border-radius: 0; }
+            .header-profile { flex-direction: row; align-items: center; }
+            .lang-switch { position: absolute; top: 15px; right: 15px; }
         }
     </style>
 </head>
-<body>
+<body oncontextmenu="return false;">
 
     <div class="container" id="resume-container">
         
-        <!-- Language Switcher Buttons -->
+        <!-- 切換語言按鈕 -->
         <div class="lang-switch">
             <button class="lang-btn active" id="btn-zh" onclick="setLanguage('zh')">繁體中文</button>
             <button class="lang-btn" id="btn-en" onclick="setLanguage('en')">English</button>
         </div>
 
-        <!-- Header Contact Info -->
+        <!-- 📌 半透明浮動 Header -->
         <header>
-            <h1>So Tat Shing (蘇達誠)</h1>
+            <div class="header-profile">
+                <img src="favicon.ico" alt="Icon" class="header-icon" onerror="this.style.display='none'">
+                <div class="header-titles">
+                    <h1>So Tat Shing</h1>
+                    <div class="name-zh">蘇達誠</div>
+                </div>
+            </div>
             <div class="contact-info">
-                <span>📧 <a href="mailto:s11314634@gm.cyut.edu.tw">s11314634@gm.cyut.edu.tw</a></span>
+                <span>📧 <a href="mailto:s11314634@gm.cyut.edu.tw">Email</a></span>
+                
+                <!-- 💬 官方通訊軟體圖示按鈕群組 (隱私保護，不顯示真實電話號碼) -->
+                <div class="social-icons">
+                    <!-- Telegram 官方標誌 -->
+                    <a href="https://t.me/tshing" target="_blank" class="social-btn btn-telegram" title="Telegram">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.03-1.99 1.27-5.62 3.72-.53.36-1.01.54-1.44.53-.47-.01-1.38-.26-2.06-.48-.83-.27-1.49-.42-1.43-.89.03-.25.38-.51 1.08-.78 4.23-1.84 7.05-3.05 8.46-3.63 4.02-1.67 4.85-1.96 5.39-1.97.12 0 .39.03.56.17.14.12.18.28.2.4-.02.07-.02.2-.04.33z"/></svg>
+                    </a>
+                    <!-- Line 官方標誌 -->
+                    <a href="https://line.me/ti/p/RgxCB4hotf" target="_blank" class="social-btn btn-line" title="LINE">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.41-.09-.544-.25l-2.65-3.155v2.778c0 .349-.281.63-.63.63-.349 0-.63-.281-.63-.63V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.211 0 .41.09.545.25l2.65 3.153V8.108c0-.345.282-.63.63-.63.345 0 .627.285.627.63v4.771zm-9.341.63H4.63c-.349 0-.63-.285-.63-.629V8.108c0-.345.281-.63.63-.63.349 0 .63.285.63.63v4.141h1.125c.349 0 .63.283.63.63 0 .344-.281.629-.63.629zm3.033-4.771c.349 0 .63.285.63.63v4.141c0 .344-.281.629-.63.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63zM2.001 12.025C2.001 6.49 6.49 2 12.025 2c5.535 0 10.024 4.49 10.024 10.025 0 5.535-4.489 10.024-10.024 10.024-1.332 0-2.62-.258-3.834-.739l-3.524 1.175 1.175-3.524c-.481-1.214-.739-2.502-.739-3.834z"/></svg>
+                    </a>
+                </div>
             </div>
         </header>
 
@@ -279,42 +358,56 @@
             <h2 data-lang="en">Education</h2>
 
             <div class="item">
-                <div class="item-header">
-                    <span class="item-title" data-lang="zh">朝陽科技大學 - 資訊管理系碩士班(資訊管理碩士)</span>
-                    <span class="item-title" data-lang="en">Chaoyang University of Technology - Master of Information Management</span>
-                    <span class="item-date" data-lang="zh">2024 – 2026 (2026年6月畢業)</span>
-                    <span class="item-date" data-lang="en">2024 – 2026 (Graduated June 2026)</span>
+                <div class="item-header" data-lang="zh">
+                    <span class="item-title">朝陽科技大學 - 資訊管理系碩士班(資訊管理碩士)</span>
+                    <span class="item-date">2024 – 2026 (2026年6月畢業)</span>
+                </div>
+                <div class="item-header" data-lang="en">
+                    <span class="item-title">Chaoyang University of Technology - Master of Information Management</span>
+                    <span class="item-date">2024 – 2026 (Graduated June 2026)</span>
                 </div>
             </div>
 
             <div class="item">
-                <div class="item-header">
-                    <span class="item-title" data-lang="zh">朝陽科技大學 - 資訊與通訊系(工程學士)</span>
-                    <span class="item-title" data-lang="en">Chaoyang University of Technology - Bachelor of Information and Communication Engineering</span>
+                <div class="item-header" data-lang="zh">
+                    <span class="item-title">朝陽科技大學 - 資訊與通訊系(工程學士)</span>
+                    <span class="item-date">2022 – 2024</span>
+                </div>
+                <div class="item-header" data-lang="en">
+                    <span class="item-title">Chaoyang University of Technology - Bachelor of Information and Communication Engineering</span>
                     <span class="item-date">2022 – 2024</span>
                 </div>
             </div>
 
             <div class="item">
-                <div class="item-header">
-                    <span class="item-title" data-lang="zh">香港專業教育學院（沙田） - 網路及流動電腦高級文憑</span>
-                    <span class="item-title" data-lang="en">Hong Kong Institute of Vocational Education (Sha Tin) - Higher Diploma in Network and Mobile Computing</span>
+                <div class="item-header" data-lang="zh">
+                    <span class="item-title">香港專業教育學院（沙田） - 網路及流動電腦高級文憑</span>
+                    <span class="item-date">2011 – 2015</span>
+                </div>
+                <div class="item-header" data-lang="en">
+                    <span class="item-title">Hong Kong Institute of Vocational Education (Sha Tin) - Higher Diploma in Network and Mobile Computing</span>
                     <span class="item-date">2011 – 2015</span>
                 </div>
             </div>
 
             <div class="item">
-                <div class="item-header">
-                    <span class="item-title" data-lang="zh">香港專業教育學院（沙田） - 商業資訊科技高級文憑（網頁設計及開發）</span>
-                    <span class="item-title" data-lang="en">Hong Kong Institute of Vocational Education (Sha Tin) - Higher Diploma in IT for Business (Web Design & Development)</span>
+                <div class="item-header" data-lang="zh">
+                    <span class="item-title">香港專業教育學院（沙田） - 商業資訊科技高級文憑（網頁設計及開發）</span>
+                    <span class="item-date">2008 – 2011</span>
+                </div>
+                <div class="item-header" data-lang="en">
+                    <span class="item-title">Hong Kong Institute of Vocational Education (Sha Tin) - Higher Diploma in IT for Business (Web Design & Development)</span>
                     <span class="item-date">2008 – 2011</span>
                 </div>
             </div>
 
             <div class="item">
-                <div class="item-header">
-                    <span class="item-title" data-lang="zh">地利亞修女紀念學校（月華） - 香港中學會考 (HKCEE)</span>
-                    <span class="item-title" data-lang="en">Delia Memorial School (Yuet Wah) - HKCEE</span>
+                <div class="item-header" data-lang="zh">
+                    <span class="item-title">地利亞修女紀念學校（月華） - 香港中學會考 (HKCEE)</span>
+                    <span class="item-date">2006 – 2008</span>
+                </div>
+                <div class="item-header" data-lang="en">
+                    <span class="item-title">Delia Memorial School (Yuet Wah) - HKCEE</span>
                     <span class="item-date">2006 – 2008</span>
                 </div>
             </div>
@@ -326,9 +419,12 @@
             <h2 data-lang="en">Work Experience</h2>
 
             <div class="item">
-                <div class="item-header">
-                    <span class="item-title" data-lang="zh">香港道教聯合會青松中學</span>
-                    <span class="item-title" data-lang="en">The Hong Kong Taoist Association Ching Chung Secondary School</span>
+                <div class="item-header" data-lang="zh">
+                    <span class="item-title">香港道教聯合會青松中學</span>
+                    <span class="item-date">2015 – 2022</span>
+                </div>
+                <div class="item-header" data-lang="en">
+                    <span class="item-title">The Hong Kong Taoist Association Ching Chung Secondary School</span>
                     <span class="item-date">2015 – 2022</span>
                 </div>
                 <div class="item-subtitle" data-lang="zh">全職 IT 助理</div>
@@ -346,9 +442,12 @@
             </div>
 
             <div class="item">
-                <div class="item-header">
-                    <span class="item-title" data-lang="zh">藝安物業及護衛服務有限公司</span>
-                    <span class="item-title" data-lang="en">Star Security</span>
+                <div class="item-header" data-lang="zh">
+                    <span class="item-title">藝安物業及護衛服務有限公司</span>
+                    <span class="item-date">2008 – 2015</span>
+                </div>
+                <div class="item-header" data-lang="en">
+                    <span class="item-title">Star Security</span>
                     <span class="item-date">2008 – 2015</span>
                 </div>
                 <div class="item-subtitle" data-lang="zh">兼職保安員</div>
@@ -376,7 +475,7 @@
             </ul>
         </section>
 
-	<!-- Technical Skills -->
+        <!-- Technical Skills -->
         <section>
             <h2 data-lang="zh">專業技能</h2>
             <h2 data-lang="en">Technical Skills</h2>
@@ -424,15 +523,13 @@
             </div>
         </section>
 
-
-
         <!-- Languages & Reference -->
         <section>
             <h2 data-lang="zh">其他資訊</h2>
             <h2 data-lang="en">Additional Information</h2>
 
             <p data-lang="zh"><strong>語言能力：</strong> 粵語（母語）、英語（基本溝通 / 懂讀寫）、中文（基本溝通 / 懂讀寫）</p>
-            <p data-lang="en"><strong>Languages:</strong> Cantonese (Native), English (Basic communication / Professional reading & writing), Chinese (Basic communication / Professional reading & writing)</p>
+            <p data-lang="en"><strong>Languages:</strong> Cantonese (Native), English (Basic communication / Professional reading & writing), Mandarin (Basic communication)</p>
 
             <p data-lang="zh"><strong>期望薪資：</strong> 面議</p>
             <p data-lang="en"><strong>Expected Salary:</strong> Negotiable</p>
@@ -446,7 +543,7 @@
         </div>
     </div>
 
-    <!-- Language Toggle Script -->
+    <!-- 語言切換與防護 Script -->
     <script>
         function setLanguage(lang) {
             const container = document.getElementById('resume-container');
@@ -463,6 +560,16 @@
                 btnEn.classList.remove('active');
             }
         }
+
+        // 🔒 基本防護：禁止滑鼠右鍵與 F12 開發者工具查看
+        document.addEventListener('contextmenu', event => event.preventDefault());
+        document.onkeydown = function(e) {
+            if (e.keyCode == 123 || 
+                (e.ctrlKey && e.shiftKey && e.keyCode == 73) || 
+                (e.ctrlKey && e.keyCode == 85)) {
+                return false;
+            }
+        };
     </script>
 </body>
 </html>
