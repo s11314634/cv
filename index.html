@@ -44,27 +44,27 @@
             position: relative; /* 浮水印相對定位 */
         }
 
-        /* 🌊 終極修復：改用內置向量 SVG 浮水印，放大覆蓋全頁且 100% 穩定顯示 */
+        /* 🌊 強效修復浮水印：適度調高透明度並確保層級 */
         .container::after {
             content: "";
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            /* 內置 SVG "STS" / IT 圖案浮水印，無需依賴圖片檔案 */
-            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 100 100'><text x='50%' y='50%' font-size='38' font-family='sans-serif' font-weight='bold' fill='%232c3e50' dominant-baseline='middle' text-anchor='middle'>ST</text></svg>");
+            top: 50%;
+            left: 50%;
+            width: 280px;
+            height: 280px;
+            background-image: url('./favicon.ico');
             background-repeat: no-repeat;
-            background-position: center center;
-            background-size: 70% auto; /* 放大覆蓋頁面中央大部分區域 */
-            opacity: 0.05; /* 透明度設定：顯眼但不干擾文字閱讀 */
+            background-position: center;
+            background-size: contain;
+            transform: translate(-50%, -50%) rotate(-15deg);
+            opacity: 0.12; /* 提高清晰度，確保浮水印顯眼 */
             pointer-events: none;
             z-index: 0;
         }
 
         header, section, .footer-note, .lang-switch {
             position: relative;
-            z-index: 1; /* 保證所有內容永遠在浮水印上方 */
+            z-index: 1; /* 保證文字內容在浮水印上方 */
         }
         
         /* Language Switcher Button */
@@ -104,7 +104,7 @@
             margin-top: 10px;
         }
 
-        /* 📍 Header 排版： Icon 喺最左面 */
+        /* 📍 左圖右字排版 */
         .header-profile {
             display: flex;
             align-items: center;
@@ -112,13 +112,13 @@
             flex-wrap: wrap;
         }
 
-        /* 正圓形 Icon（無圍邊、絕不拉伸） */
+        /* 🔴 修正：正圓形 Icon，移除圍邊與橢圓變形 */
         .header-icon {
             width: 56px;
             height: 56px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: none;
+            border-radius: 50%; /* 強制正圓形 */
+            object-fit: cover;   /* 防止壓縮變成橢圓 */
+            border: none;        /* 移除任何圍邊線條 */
             box-shadow: none;
             display: block;
         }
@@ -246,7 +246,7 @@
             padding-top: 15px;
         }
 
-        /* 🌐 雙語切換控制 */
+        /* 🌐 雙語切換邏輯 */
         [data-lang="en"] { display: none !important; }
         .lang-en [data-lang="zh"] { display: none !important; }
         .lang-en [data-lang="en"] { display: block !important; }
@@ -275,7 +275,7 @@
         <!-- Header -->
         <header>
             <div class="header-profile">
-                <!-- 正圓形 Icon 靠左 -->
+                <!-- 正圓形小圖示（無外邊框、無視訊扭曲） -->
                 <img src="favicon.ico" alt="Icon" class="header-icon" onerror="this.style.display='none'">
                 <div class="header-titles">
                     <h1>So Tat Shing</h1>
@@ -472,7 +472,7 @@
             <h2 data-lang="en">Additional Information</h2>
 
             <p data-lang="zh"><strong>語言能力：</strong> 粵語（母語）、英語（基本溝通 / 懂讀寫）、中文（基本溝通 / 懂讀寫）</p>
-            <p data-lang="en"><strong>Languages:</strong> Cantonese (Native), English (Basic communication / Professional reading & writing), Mandarin (Basic communication)</p>
+            <p data-lang="en"><strong>Languages:</strong> Cantonese (Native), English (Basic communication / Professional reading & writing), Chinese (Basic communication / Professional reading & writing)</p>
 
             <p data-lang="zh"><strong>期望薪資：</strong> 面議</p>
             <p data-lang="en"><strong>Expected Salary:</strong> Negotiable</p>
