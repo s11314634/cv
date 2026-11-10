@@ -41,30 +41,30 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
             overflow: hidden;
             padding: 40px;
-            position: relative;
+            position: relative; /* 確保浮水印定位正確 */
         }
 
-        /* 🌊 背景浮水印設定 (確保正常顯示) */
+        /* 🌊 修復後的背景浮水印設定 */
         .container::after {
             content: "";
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 300px;
-            height: 300px;
+            width: 350px;
+            height: 350px;
             background-image: url('favicon.ico');
             background-repeat: no-repeat;
             background-position: center;
             background-size: contain;
             transform: translate(-50%, -50%) rotate(-15deg);
-            opacity: 0.04;
+            opacity: 0.05; /* 微調至 0.05 確保清晰可見但唔影響閱讀 */
             pointer-events: none;
             z-index: 0;
         }
 
         header, section, .footer-note, .lang-switch {
             position: relative;
-            z-index: 1;
+            z-index: 1; /* 確保文字永遠在浮水印上層 */
         }
         
         /* Language Switcher Button */
@@ -98,51 +98,54 @@
         }
 
         header {
-            text-align: center;
             border-bottom: 2px solid var(--border-color);
             padding-bottom: 25px;
             margin-bottom: 30px;
             margin-top: 10px;
         }
 
-        /* 📍 標題與姓名設計：改為上下兩行，避免擠壓 */
-        h1 {
-            font-size: 1.8rem;
-            color: var(--primary-color);
-            margin-bottom: 10px;
+        /* 📍 修正：將 Header 改為左圖右文排版 */
+        .header-profile {
             display: flex;
-            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            gap: 5px;
-        }
-
-        .name-en {
-            font-size: 1.8rem;
-            font-weight: bold;
-        }
-
-        .name-zh {
-            font-size: 1.4rem;
-            color: var(--light-text);
-            font-weight: normal;
+            gap: 20px;
+            flex-wrap: wrap;
         }
 
         .header-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 6px;
-            margin-bottom: 5px;
+            width: 64px;
+            height: 64px;
+            border-radius: 10px;
+            object-fit: cover;
+            border: 1px solid var(--border-color);
+            background-color: #fff;
+        }
+
+        .header-titles {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 4px;
+        }
+
+        .name-zh {
+            font-size: 1.2rem;
+            color: var(--light-text);
+            font-weight: normal;
         }
 
         .contact-info {
             display: flex;
             flex-wrap: wrap;
-            justify-content: center;
             gap: 15px;
             font-size: 0.95rem;
             color: var(--light-text);
-            margin-top: 10px;
+            margin-top: 12px;
         }
 
         section {
@@ -220,6 +223,7 @@
             margin-bottom: 5px;
             color: var(--primary-color);
             font-size: 0.95rem;
+            line-height: 1.4;
         }
 
         a {
@@ -240,7 +244,7 @@
             padding-top: 15px;
         }
 
-        /* 🌐 完美雙語切換控制邏輯 */
+        /* 🌐 雙語切換控制邏輯 */
         [data-lang="en"] { display: none !important; }
         .lang-en [data-lang="zh"] { display: none !important; }
         .lang-en [data-lang="en"] { display: block !important; }
@@ -251,7 +255,7 @@
 
         @media (max-width: 600px) {
             .container { padding: 20px; }
-            h1 { font-size: 1.5rem; }
+            .header-profile { flex-direction: column; align-items: flex-start; }
             .lang-switch { position: relative; top: 0; right: 0; justify-content: center; margin-bottom: 15px; }
         }
     </style>
@@ -266,13 +270,15 @@
             <button class="lang-btn" id="btn-en" onclick="setLanguage('en')">English</button>
         </div>
 
-        <!-- Header Contact Info (改為上下兩行) -->
+        <!-- Header (Icon 放喺左面，名字分上下兩行) -->
         <header>
-            <h1>
+            <div class="header-profile">
                 <img src="favicon.ico" alt="Icon" class="header-icon" onerror="this.style.display='none'">
-                <span class="name-en">So Tat Shing</span>
-                <span class="name-zh">(蘇達誠)</span>
-            </h1>
+                <div class="header-titles">
+                    <h1>So Tat Shing</h1>
+                    <div class="name-zh">蘇達誠</div>
+                </div>
+            </div>
             <div class="contact-info">
                 <span>📧 <a href="mailto:s11314634@gm.cyut.edu.tw">s11314634@gm.cyut.edu.tw</a></span>
             </div>
@@ -286,7 +292,7 @@
             <p data-lang="en">IT professional with over 7 years of full-time school IT support and network management experience, backed by a background in Information Management and Engineering. Recently graduated with a Master's degree in June 2026 and currently available for employment. Research focus centers on Large Language Models (LLMs), FinBERT, and financial sentiment analysis. Possesses practical technical troubleshooting, problem-solving, and analytical skills, with a dedicated and responsible work attitude.</p>
         </section>
 
-        <!-- Education (修復英文版學歷完全消失的問題) -->
+        <!-- Education -->
         <section>
             <h2 data-lang="zh">學歷</h2>
             <h2 data-lang="en">Education</h2>
