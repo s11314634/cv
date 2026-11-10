@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <html lang="zh-HK">
-<<!DOCTYPE html>
-<html lang="zh-HK">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -56,7 +54,7 @@
             left: 50%;
             width: 300px;
             height: 300px;
-            /* 預設使用你的 favicon.ico 作為背景浮水印圖案 */
+            /* 使用 favicon.ico 作為背景浮水印圖案 */
             background-image: url('favicon.ico');
             background-repeat: no-repeat;
             background-position: center;
@@ -237,10 +235,17 @@
             padding-top: 15px;
         }
 
-        /* Language Toggle Display Rules */
-        [data-lang="en"] { display: none; }
-        .lang-en [data-lang="zh"] { display: none; }
-        .lang-en [data-lang="en"] { display: block; }
+        /* -------------------------------------------------- */
+        /* 🌐 修正後的雙語切換顯示規則 (Bilingual Display Rules) */
+        /* -------------------------------------------------- */
+        [data-lang="en"] { display: none !important; }
+        .lang-en [data-lang="zh"] { display: none !important; }
+        .lang-en [data-lang="en"] { display: block !important; }
+        
+        /* 針對行內元素或特定標籤的精準控制 */
+        span[data-lang="en"], span[data-lang="zh"] { display: inline !important; }
+        .lang-en span[data-lang="zh"] { display: none !important; }
+        body:not(.lang-en) span[data-lang="en"] { display: none !important; }
 
         @media (max-width: 600px) {
             .container { padding: 20px; }
@@ -261,7 +266,11 @@
 
         <!-- Header Contact Info -->
         <header>
-            <h1>So Tat Shing (蘇達誠)</h1>
+            <h1>
+                <!-- 名字旁邊的小圖示 -->
+                <img src="favicon.ico" alt="Icon" class="header-icon" onerror="this.style.display='none'">
+                <span>So Tat Shing (蘇達誠)</span>
+            </h1>
             <div class="contact-info">
                 <span>📧 <a href="mailto:s11314634@gm.cyut.edu.tw">s11314634@gm.cyut.edu.tw</a></span>
             </div>
@@ -425,8 +434,6 @@
                 </div>
             </div>
         </section>
-
-
 
         <!-- Languages & Reference -->
         <section>
