@@ -41,30 +41,30 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
             overflow: hidden;
             padding: 40px;
-            position: relative; /* 確保浮水印定位正確 */
+            position: relative; /* 浮水印相對定位 */
         }
 
-        /* 🌊 修復後的背景浮水印設定 */
+        /* 🌊 強效修復浮水印：適度調高透明度並確保層級 */
         .container::after {
             content: "";
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 350px;
-            height: 350px;
-            background-image: url('favicon.ico');
+            width: 280px;
+            height: 280px;
+            background-image: url('./favicon.ico');
             background-repeat: no-repeat;
             background-position: center;
             background-size: contain;
             transform: translate(-50%, -50%) rotate(-15deg);
-            opacity: 0.05; /* 微調至 0.05 確保清晰可見但唔影響閱讀 */
+            opacity: 0.12; /* 提高清晰度，確保浮水印顯眼 */
             pointer-events: none;
             z-index: 0;
         }
 
         header, section, .footer-note, .lang-switch {
             position: relative;
-            z-index: 1; /* 確保文字永遠在浮水印上層 */
+            z-index: 1; /* 保證文字內容在浮水印上方 */
         }
         
         /* Language Switcher Button */
@@ -104,21 +104,23 @@
             margin-top: 10px;
         }
 
-        /* 📍 修正：將 Header 改為左圖右文排版 */
+        /* 📍 左圖右字排版 */
         .header-profile {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 16px;
             flex-wrap: wrap;
         }
 
+        /* 🔴 修正：正圓形 Icon，移除圍邊與橢圓變形 */
         .header-icon {
-            width: 64px;
-            height: 64px;
-            border-radius: 10px;
-            object-fit: cover;
-            border: 1px solid var(--border-color);
-            background-color: #fff;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%; /* 強制正圓形 */
+            object-fit: cover;   /* 防止壓縮變成橢圓 */
+            border: none;        /* 移除任何圍邊線條 */
+            box-shadow: none;
+            display: block;
         }
 
         .header-titles {
@@ -130,7 +132,7 @@
         h1 {
             font-size: 1.8rem;
             color: var(--primary-color);
-            margin-bottom: 4px;
+            margin-bottom: 2px;
         }
 
         .name-zh {
@@ -244,7 +246,7 @@
             padding-top: 15px;
         }
 
-        /* 🌐 雙語切換控制邏輯 */
+        /* 🌐 雙語切換邏輯 */
         [data-lang="en"] { display: none !important; }
         .lang-en [data-lang="zh"] { display: none !important; }
         .lang-en [data-lang="en"] { display: block !important; }
@@ -255,7 +257,7 @@
 
         @media (max-width: 600px) {
             .container { padding: 20px; }
-            .header-profile { flex-direction: column; align-items: flex-start; }
+            .header-profile { flex-direction: row; align-items: center; }
             .lang-switch { position: relative; top: 0; right: 0; justify-content: center; margin-bottom: 15px; }
         }
     </style>
@@ -270,9 +272,10 @@
             <button class="lang-btn" id="btn-en" onclick="setLanguage('en')">English</button>
         </div>
 
-        <!-- Header (Icon 放喺左面，名字分上下兩行) -->
+        <!-- Header -->
         <header>
             <div class="header-profile">
+                <!-- 正圓形小圖示（無外邊框、無視訊扭曲） -->
                 <img src="favicon.ico" alt="Icon" class="header-icon" onerror="this.style.display='none'">
                 <div class="header-titles">
                     <h1>So Tat Shing</h1>
