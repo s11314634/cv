@@ -31,6 +31,24 @@
             color: var(--text-color);
             line-height: 1.6;
             padding: 20px;
+            position: relative;
+        }
+
+        /* 🌊 全頁滿鋪浮水印（重複覆蓋整個螢幕） */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: url('./favicon.ico');
+            background-repeat: repeat;
+            background-position: center;
+            background-size: 90px 90px; /* 浮水印圖示大小 */
+            opacity: 0.05; /* 透明度設定 */
+            pointer-events: none;
+            z-index: 9999;
         }
 
         .container {
@@ -41,30 +59,8 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
             overflow: hidden;
             padding: 40px;
-            position: relative; /* 浮水印相對定位 */
-        }
-
-        /* 🌊 強效修復浮水印：適度調高透明度並確保層級 */
-        .container::after {
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 280px;
-            height: 280px;
-            background-image: url('./favicon.ico');
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: contain;
-            transform: translate(-50%, -50%) rotate(-15deg);
-            opacity: 0.12; /* 提高清晰度，確保浮水印顯眼 */
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        header, section, .footer-note, .lang-switch {
             position: relative;
-            z-index: 1; /* 保證文字內容在浮水印上方 */
+            z-index: 1;
         }
         
         /* Language Switcher Button */
@@ -78,6 +74,7 @@
             padding: 4px;
             border-radius: 20px;
             border: 1px solid var(--border-color);
+            z-index: 10;
         }
 
         .lang-btn {
@@ -112,13 +109,13 @@
             flex-wrap: wrap;
         }
 
-        /* 🔴 修正：正圓形 Icon，移除圍邊與橢圓變形 */
+        /* 🔴 正圓形 Icon，無框線、變形 */
         .header-icon {
             width: 56px;
             height: 56px;
-            border-radius: 50%; /* 強制正圓形 */
-            object-fit: cover;   /* 防止壓縮變成橢圓 */
-            border: none;        /* 移除任何圍邊線條 */
+            border-radius: 50%;
+            object-fit: cover;
+            border: none;
             box-shadow: none;
             display: block;
         }
@@ -275,7 +272,6 @@
         <!-- Header -->
         <header>
             <div class="header-profile">
-                <!-- 正圓形小圖示（無外邊框、無視訊扭曲） -->
                 <img src="favicon.ico" alt="Icon" class="header-icon" onerror="this.style.display='none'">
                 <div class="header-titles">
                     <h1>So Tat Shing</h1>
