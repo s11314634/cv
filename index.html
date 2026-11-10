@@ -33,8 +33,8 @@
             line-height: 1.6;
             padding: 0;
             display: flex;
-            justify-content: center;
-            align-items: flex-start;
+            flex-direction: column;
+            align-items: center;
             min-height: 100vh;
             -webkit-user-select: none;
             -moz-user-select: none;
@@ -42,57 +42,33 @@
             user-select: none;
         }
 
-        .container {
-            width: 100%;
-            max-width: 800px;
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-            overflow: hidden;
-            padding: 30px 40px 40px 40px;
-            position: relative;
-            margin: 20px 0;
-        }
-
-        /* 🌊 全頁向量浮水印 (放大覆蓋全頁，保持高清不模糊) */
-        .container::after {
-            content: "";
-            position: absolute;
+        /* 📌 【核心修改】跨越全頁 Full Width 滿版半透明懸浮導覽列 */
+        header {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
-            background-image: url('./favicon.ico');
-            background-repeat: no-repeat;
-            background-position: center center;
-            background-size: 60% auto;
-            opacity: 0.07;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        header, section, .footer-note {
-            position: relative;
-            z-index: 1;
-        }
-
-        /* 📌 永遠顯示的半透明浮動頂部列 (Sticky Translucent Floating Header / 浮標按鈕) */
-        header {
-            position: sticky;
-            top: 0;
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(255, 255, 255, 0.88);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border-bottom: 2px solid var(--border-color);
-            padding: 12px 20px;
-            margin: -30px -40px 30px -40px; /* 滿寬貼頂 */
-            z-index: 100;
+            border-bottom: 1px solid var(--border-color);
+            padding: 12px 25px;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+        }
+
+        .header-content-wrapper {
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 15px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+            gap: 12px;
         }
 
         /* 👈 左側區域：最左上角（繁／EN 切換按鈕）+ 個人頭像姓名 */
@@ -129,7 +105,7 @@
             color: #ffffff;
         }
 
-        /* 👤 頭像與中英文姓名（上下排列，正圓形） */
+        /* 👤 正圓形頭像 + 中英文姓名（上下排列） */
         .header-profile {
             display: flex;
             align-items: center;
@@ -137,8 +113,8 @@
         }
 
         .header-icon {
-            width: 42px;
-            height: 42px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             object-fit: cover;
             border: none;
@@ -151,13 +127,13 @@
         }
 
         h1 {
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             color: var(--primary-color);
             line-height: 1.2;
         }
 
         .name-zh {
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             color: var(--light-text);
             font-weight: normal;
         }
@@ -197,7 +173,7 @@
             justify-content: center;
             width: 26px;
             height: 26px;
-            border-radius: 50%; /* 圓形圖示 */
+            border-radius: 50%; /* 正圓形 */
             color: #ffffff;
             font-size: 0.75rem;
         }
@@ -205,6 +181,43 @@
         .btn-telegram { background-color: #229ED9; }
         .btn-line { background-color: #06C755; }
         .btn-email { background-color: #e74c3c; }
+        .btn-whatsapp { background-color: #25D366; }
+        
+        /* 主內容卡片容器（留出懸浮頂欄的高度 Padding） */
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            padding: 40px;
+            position: relative;
+            margin-top: 85px; /* 為置頂 Fixed Header 留出空間 */
+            margin-bottom: 30px;
+        }
+
+        /* 🌊 全頁向量浮水印 (放大覆蓋全頁且保持高清) */
+        .container::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('./favicon.ico');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 60% auto;
+            opacity: 0.07;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        section, .footer-note {
+            position: relative;
+            z-index: 1;
+        }
 
         section {
             margin-bottom: 30px;
@@ -302,7 +315,7 @@
             padding-top: 15px;
         }
 
-        /* 🌐 雙語切換控制邏輯 */
+        /* 🌐 雙語切換邏輯 */
         [data-lang="en"] { display: none !important; }
         .lang-en [data-lang="zh"] { display: none !important; }
         .lang-en [data-lang="en"] { display: block !important; }
@@ -312,27 +325,24 @@
         .lang-en .item-header [data-lang="en"] { display: flex; width: 100%; justify-content: space-between; }
 
         @media (max-width: 680px) {
-            .container { padding: 20px; margin: 0; border-radius: 0; }
-            header { margin: -20px -20px 20px -20px; padding: 12px 15px; flex-direction: column; align-items: flex-start; gap: 10px; }
+            .container { padding: 20px; margin-top: 120px; border-radius: 0; }
+            .header-content-wrapper { flex-direction: column; align-items: flex-start; gap: 8px; }
             .header-right-social { width: 100%; justify-content: flex-start; }
         }
     </style>
 </head>
 <body oncontextmenu="return false;">
 
-    <div class="container" id="resume-container">
-
-        <!-- 📌 永遠顯示的半透明浮動 Header -->
-        <header>
+    <!-- 📌 全頁 Full-Width 滿版半透明懸浮 Header -->
+    <header>
+        <div class="header-content-wrapper">
             <!-- 左側：最左上角（繁／EN 切換按鈕） + 個人頭像姓名 -->
             <div class="header-left-group">
-                <!-- 🌐 最左上角切換按鈕 -->
                 <div class="lang-switch">
                     <button class="lang-btn active" id="btn-zh" onclick="setLanguage('zh')">繁</button>
                     <button class="lang-btn" id="btn-en" onclick="setLanguage('en')">EN</button>
                 </div>
 
-                <!-- 👤 正圓形 Icon + 中英文姓名 (上下兩行) -->
                 <div class="header-profile">
                     <img src="favicon.ico" alt="Icon" class="header-icon" onerror="this.style.display='none'">
                     <div class="header-titles">
@@ -345,7 +355,7 @@
             <!-- 最右上角： 通訊軟體 (圓形圖示 + 軟體名稱) -->
             <div class="header-right-social">
                 <!-- Telegram -->
-                <a href="https://t.me/your_telegram_username" target="_blank" class="social-link-item">
+                <a href="https://t.me/@jomak9" target="_blank" class="social-link-item">
                     <span class="social-btn-icon btn-telegram">
                         <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.03-1.99 1.27-5.62 3.72-.53.36-1.01.54-1.44.53-.47-.01-1.38-.26-2.06-.48-.83-.27-1.49-.42-1.43-.89.03-.25.38-.51 1.08-.78 4.23-1.84 7.05-3.05 8.46-3.63 4.02-1.67 4.85-1.96 5.39-1.97.12 0 .39.03.56.17.14.12.18.28.2.4-.02.07-.02.2-.04.33z"/></svg>
                     </span>
@@ -353,11 +363,19 @@
                 </a>
 
                 <!-- LINE -->
-                <a href="https://line.me/ti/p/your_line_id" target="_blank" class="social-link-item">
+                <a href="https://line.me/ti/p/RgxCB4hotf" target="_blank" class="social-link-item">
                     <span class="social-btn-icon btn-line">
                         <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.41-.09-.544-.25l-2.65-3.155v2.778c0 .349-.281.63-.63.63-.349 0-.63-.281-.63-.63V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.211 0 .41.09.545.25l2.65 3.153V8.108c0-.345.282-.63.63-.63.345 0 .627.285.627.63v4.771zm-9.341.63H4.63c-.349 0-.63-.285-.63-.629V8.108c0-.345.281-.63.63-.63.349 0 .63.285.63.63v4.141h1.125c.349 0 .63.283.63.63 0 .344-.281.629-.63.629zm3.033-4.771c.349 0 .63.285.63.63v4.141c0 .344-.281.629-.63.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63zM2.001 12.025C2.001 6.49 6.49 2 12.025 2c5.535 0 10.024 4.49 10.024 10.025 0 5.535-4.489 10.024-10.024 10.024-1.332 0-2.62-.258-3.834-.739l-3.524 1.175 1.175-3.524c-.481-1.214-.739-2.502-.739-3.834z"/></svg>
                     </span>
                     <span>LINE</span>
+                </a>
+
+                <!-- LINE -->
+                <a href="https://wa.me/85269281058" target="_blank" class="social-link-item">
+                    <span class="social-btn-icon btn-whatsapp">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.41-.09-.544-.25l-2.65-3.155v2.778c0 .349-.281.63-.63.63-.349 0-.63-.281-.63-.63V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.211 0 .41.09.545.25l2.65 3.153V8.108c0-.345.282-.63.63-.63.345 0 .627.285.627.63v4.771zm-9.341.63H4.63c-.349 0-.63-.285-.63-.629V8.108c0-.345.281-.63.63-.63.349 0 .63.285.63.63v4.141h1.125c.349 0 .63.283.63.63 0 .344-.281.629-.63.629zm3.033-4.771c.349 0 .63.285.63.63v4.141c0 .344-.281.629-.63.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63zM2.001 12.025C2.001 6.49 6.49 2 12.025 2c5.535 0 10.024 4.49 10.024 10.025 0 5.535-4.489 10.024-10.024 10.024-1.332 0-2.62-.258-3.834-.739l-3.524 1.175 1.175-3.524c-.481-1.214-.739-2.502-.739-3.834z"/></svg>
+                    </span>
+                    <span>whatsapp</span>
                 </a>
 
                 <!-- Email -->
@@ -366,8 +384,10 @@
                     <span>Email</span>
                 </a>
             </div>
-        </header>
+        </div>
+    </header>
 
+    <div class="container" id="resume-container">
         <!-- Summary -->
         <section>
             <h2 data-lang="zh">個人簡介</h2>
@@ -562,38 +582,4 @@
             <p data-lang="en"><strong>Master's Thesis:</strong> <a href="https://hdl.handle.net/11296/3724ts" target="_blank">A Comparative Study of LLMs and FinBERT for Sentiment Analysis of Chinese Cryptocurrency News Headlines</a></p>
         </section>
 
-        <div class="footer-note">
-            © 2026 So Tat Shing. All rights reserved.
-        </div>
-    </div>
-
-    <!-- 語言切換與防護 Script -->
-    <script>
-        function setLanguage(lang) {
-            const container = document.getElementById('resume-container');
-            const btnZh = document.getElementById('btn-zh');
-            const btnEn = document.getElementById('btn-en');
-
-            if (lang === 'en') {
-                container.classList.add('lang-en');
-                btnEn.classList.add('active');
-                btnZh.classList.remove('active');
-            } else {
-                container.classList.remove('lang-en');
-                btnZh.classList.add('active');
-                btnEn.classList.remove('active');
-            }
-        }
-
-        // 🔒 基本防護：禁止滑鼠右鍵與 F12 開發者工具查看
-        document.addEventListener('contextmenu', event => event.preventDefault());
-        document.onkeydown = function(e) {
-            if (e.keyCode == 123 || 
-                (e.ctrlKey && e.shiftKey && e.keyCode == 73) || 
-                (e.ctrlKey && e.keyCode == 85)) {
-                return false;
-            }
-        };
-    </script>
-</body>
-</html>
+        <div class="
