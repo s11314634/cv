@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh-HK">
+<<!DOCTYPE html>
+<html lang="zh-HK">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>So Tat Shing (蘇達誠)</title>
 
     <!-- 網頁標籤頁圖示 (Favicon) -->
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    
+	<link rel="icon" type="image/x-icon" href="favicon.ico">
+	
     <style>
         :root {
             --primary-color: #2c3e50;
@@ -45,7 +47,7 @@
         }
 
         /* -------------------------------------------------- */
-        /* 🌊 背景浮水印 (Background Watermark) CSS          */
+        /* 🌊 方案一：背景浮水印 (Background Watermark) CSS */
         /* -------------------------------------------------- */
         .container::after {
             content: "";
@@ -54,21 +56,24 @@
             left: 50%;
             width: 300px;
             height: 300px;
+            /* 預設使用你的 favicon.ico 作為背景浮水印圖案 */
             background-image: url('favicon.ico');
             background-repeat: no-repeat;
             background-position: center;
             background-size: contain;
+            /* 將圖樣旋轉並極大幅度淡化（Opacity 0.04），確保不影響文字閱讀 */
             transform: translate(-50%, -50%) rotate(-15deg);
             opacity: 0.04;
-            pointer-events: none;
+            pointer-events: none; /* 防止遮擋文字導致無法點擊或複製 */
             z-index: 0;
         }
 
+        /* 確保所有文字區塊在浮水印之上 */
         header, section, .footer-note, .lang-switch {
             position: relative;
             z-index: 1;
         }
-        
+		
         /* Language Switcher Button */
         .lang-switch {
             position: absolute;
@@ -108,7 +113,7 @@
         }
 
         /* -------------------------------------------------- */
-        /* 📍 標題旁邊加小圖示 (Header Icon) CSS            */
+        /* 📍 方案二：標題旁邊加小圖示 (Header Icon) CSS     */
         /* -------------------------------------------------- */
         h1 {
             font-size: 2rem;
@@ -232,17 +237,10 @@
             padding-top: 15px;
         }
 
-        /* -------------------------------------------------- */
-        /* 🔧 雙語切換關鍵控制語法 (Fixed Language Rules)     */
-        /* -------------------------------------------------- */
-        [data-lang="en"] { display: none !important; }
-        .lang-en [data-lang="zh"] { display: none !important; }
-        .lang-en [data-lang="en"] { display: block !important; }
-        
-        /* 針對內聯 span 元素的顯示修正 */
-        span[data-lang="en"], span[data-lang="zh"] { display: inline !important; }
-        .lang-en span[data-lang="zh"] { display: none !important; }
-        body:not(.lang-en) span[data-lang="en"] { display: none !important; }
+        /* Language Toggle Display Rules */
+        [data-lang="en"] { display: none; }
+        .lang-en [data-lang="zh"] { display: none; }
+        .lang-en [data-lang="en"] { display: block; }
 
         @media (max-width: 600px) {
             .container { padding: 20px; }
@@ -263,10 +261,7 @@
 
         <!-- Header Contact Info -->
         <header>
-            <h1>
-                <img src="favicon.ico" alt="Icon" class="header-icon" onerror="this.style.display='none'">
-                <span>So Tat Shing (蘇達誠)</span>
-            </h1>
+            <h1>So Tat Shing (蘇達誠)</h1>
             <div class="contact-info">
                 <span>📧 <a href="mailto:s11314634@gm.cyut.edu.tw">s11314634@gm.cyut.edu.tw</a></span>
             </div>
@@ -287,7 +282,7 @@
 
             <div class="item">
                 <div class="item-header">
-                    <span class="item-title" data-lang="zh">朝陽科技大學 - 資訊管理系碩士班（資訊管理學碩士）</span>
+                    <span class="item-title" data-lang="zh">朝陽科技大學 - 資訊管理系碩士班(資訊管理碩士)</span>
                     <span class="item-title" data-lang="en">Chaoyang University of Technology - Master of Information Management</span>
                     <span class="item-date" data-lang="zh">2024 – 2026 (2026年6月畢業)</span>
                     <span class="item-date" data-lang="en">2024 – 2026 (Graduated June 2026)</span>
@@ -296,10 +291,9 @@
 
             <div class="item">
                 <div class="item-header">
-                    <span class="item-title" data-lang="zh">朝陽科技大學 - 資訊與通訊系（工學學士）</span>
+                    <span class="item-title" data-lang="zh">朝陽科技大學 - 資訊與通訊系(工程學士)</span>
                     <span class="item-title" data-lang="en">Chaoyang University of Technology - Bachelor of Information and Communication Engineering</span>
-                    <span class="item-date" data-lang="zh">2022 – 2024 (2024年6月畢業)</span>
-                    <span class="item-date" data-lang="en">2022 – 2024 (Graduated June 2024)</span>
+                    <span class="item-date">2022 – 2024</span>
                 </div>
             </div>
 
@@ -384,7 +378,7 @@
             </ul>
         </section>
 
-        <!-- Technical Skills -->
+	<!-- Technical Skills -->
         <section>
             <h2 data-lang="zh">專業技能</h2>
             <h2 data-lang="en">Technical Skills</h2>
@@ -431,6 +425,8 @@
                 </div>
             </div>
         </section>
+
+
 
         <!-- Languages & Reference -->
         <section>
