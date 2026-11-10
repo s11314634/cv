@@ -6,8 +6,8 @@
     <title>So Tat Shing (蘇達誠)</title>
 
     <!-- 網頁標籤頁圖示 (Favicon) -->
-	<link rel="icon" type="image/x-icon" href="favicon.ico">
-	
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    
     <style>
         :root {
             --primary-color: #2c3e50;
@@ -44,9 +44,7 @@
             position: relative;
         }
 
-        /* -------------------------------------------------- */
-        /* 🌊 方案一：背景浮水印 (Background Watermark) CSS */
-        /* -------------------------------------------------- */
+        /* 🌊 背景浮水印設定 (確保正常顯示) */
         .container::after {
             content: "";
             position: absolute;
@@ -54,24 +52,21 @@
             left: 50%;
             width: 300px;
             height: 300px;
-            /* 使用 favicon.ico 作為背景浮水印圖案 */
             background-image: url('favicon.ico');
             background-repeat: no-repeat;
             background-position: center;
             background-size: contain;
-            /* 將圖樣旋轉並極大幅度淡化（Opacity 0.04），確保不影響文字閱讀 */
             transform: translate(-50%, -50%) rotate(-15deg);
             opacity: 0.04;
-            pointer-events: none; /* 防止遮擋文字導致無法點擊或複製 */
+            pointer-events: none;
             z-index: 0;
         }
 
-        /* 確保所有文字區塊在浮水印之上 */
         header, section, .footer-note, .lang-switch {
             position: relative;
             z-index: 1;
         }
-		
+        
         /* Language Switcher Button */
         .lang-switch {
             position: absolute;
@@ -110,24 +105,34 @@
             margin-top: 10px;
         }
 
-        /* -------------------------------------------------- */
-        /* 📍 方案二：標題旁邊加小圖示 (Header Icon) CSS     */
-        /* -------------------------------------------------- */
+        /* 📍 標題與姓名設計：改為上下兩行，避免擠壓 */
         h1 {
-            font-size: 2rem;
+            font-size: 1.8rem;
             color: var(--primary-color);
             margin-bottom: 10px;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 5px;
+        }
+
+        .name-en {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .name-zh {
+            font-size: 1.4rem;
+            color: var(--light-text);
+            font-weight: normal;
         }
 
         .header-icon {
-            width: 32px;
-            height: 32px;
-            vertical-align: middle;
+            width: 36px;
+            height: 36px;
             border-radius: 6px;
+            margin-bottom: 5px;
         }
 
         .contact-info {
@@ -235,21 +240,18 @@
             padding-top: 15px;
         }
 
-        /* -------------------------------------------------- */
-        /* 🌐 修正後的雙語切換顯示規則 (Bilingual Display Rules) */
-        /* -------------------------------------------------- */
+        /* 🌐 完美雙語切換控制邏輯 */
         [data-lang="en"] { display: none !important; }
         .lang-en [data-lang="zh"] { display: none !important; }
         .lang-en [data-lang="en"] { display: block !important; }
         
-        /* 針對行內元素或特定標籤的精準控制 */
-        span[data-lang="en"], span[data-lang="zh"] { display: inline !important; }
-        .lang-en span[data-lang="zh"] { display: none !important; }
-        body:not(.lang-en) span[data-lang="en"] { display: none !important; }
+        .item-header [data-lang="en"] { display: none; }
+        .lang-en .item-header [data-lang="zh"] { display: none; }
+        .lang-en .item-header [data-lang="en"] { display: flex; width: 100%; justify-content: space-between; }
 
         @media (max-width: 600px) {
             .container { padding: 20px; }
-            h1 { font-size: 1.6rem; }
+            h1 { font-size: 1.5rem; }
             .lang-switch { position: relative; top: 0; right: 0; justify-content: center; margin-bottom: 15px; }
         }
     </style>
@@ -264,12 +266,12 @@
             <button class="lang-btn" id="btn-en" onclick="setLanguage('en')">English</button>
         </div>
 
-        <!-- Header Contact Info -->
+        <!-- Header Contact Info (改為上下兩行) -->
         <header>
             <h1>
-                <!-- 名字旁邊的小圖示 -->
                 <img src="favicon.ico" alt="Icon" class="header-icon" onerror="this.style.display='none'">
-                <span>So Tat Shing (蘇達誠)</span>
+                <span class="name-en">So Tat Shing</span>
+                <span class="name-zh">(蘇達誠)</span>
             </h1>
             <div class="contact-info">
                 <span>📧 <a href="mailto:s11314634@gm.cyut.edu.tw">s11314634@gm.cyut.edu.tw</a></span>
@@ -284,48 +286,62 @@
             <p data-lang="en">IT professional with over 7 years of full-time school IT support and network management experience, backed by a background in Information Management and Engineering. Recently graduated with a Master's degree in June 2026 and currently available for employment. Research focus centers on Large Language Models (LLMs), FinBERT, and financial sentiment analysis. Possesses practical technical troubleshooting, problem-solving, and analytical skills, with a dedicated and responsible work attitude.</p>
         </section>
 
-        <!-- Education -->
+        <!-- Education (修復英文版學歷完全消失的問題) -->
         <section>
             <h2 data-lang="zh">學歷</h2>
             <h2 data-lang="en">Education</h2>
 
             <div class="item">
-                <div class="item-header">
-                    <span class="item-title" data-lang="zh">朝陽科技大學 - 資訊管理系碩士班(資訊管理碩士)</span>
-                    <span class="item-title" data-lang="en">Chaoyang University of Technology - Master of Information Management</span>
-                    <span class="item-date" data-lang="zh">2024 – 2026 (2026年6月畢業)</span>
-                    <span class="item-date" data-lang="en">2024 – 2026 (Graduated June 2026)</span>
+                <div class="item-header" data-lang="zh">
+                    <span class="item-title">朝陽科技大學 - 資訊管理系碩士班(資訊管理碩士)</span>
+                    <span class="item-date">2024 – 2026 (2026年6月畢業)</span>
+                </div>
+                <div class="item-header" data-lang="en">
+                    <span class="item-title">Chaoyang University of Technology - Master of Information Management</span>
+                    <span class="item-date">2024 – 2026 (Graduated June 2026)</span>
                 </div>
             </div>
 
             <div class="item">
-                <div class="item-header">
-                    <span class="item-title" data-lang="zh">朝陽科技大學 - 資訊與通訊系(工程學士)</span>
-                    <span class="item-title" data-lang="en">Chaoyang University of Technology - Bachelor of Information and Communication Engineering</span>
+                <div class="item-header" data-lang="zh">
+                    <span class="item-title">朝陽科技大學 - 資訊與通訊系(工程學士)</span>
+                    <span class="item-date">2022 – 2024</span>
+                </div>
+                <div class="item-header" data-lang="en">
+                    <span class="item-title">Chaoyang University of Technology - Bachelor of Information and Communication Engineering</span>
                     <span class="item-date">2022 – 2024</span>
                 </div>
             </div>
 
             <div class="item">
-                <div class="item-header">
-                    <span class="item-title" data-lang="zh">香港專業教育學院（沙田） - 網路及流動電腦高級文憑</span>
-                    <span class="item-title" data-lang="en">Hong Kong Institute of Vocational Education (Sha Tin) - Higher Diploma in Network and Mobile Computing</span>
+                <div class="item-header" data-lang="zh">
+                    <span class="item-title">香港專業教育學院（沙田） - 網路及流動電腦高級文憑</span>
+                    <span class="item-date">2011 – 2015</span>
+                </div>
+                <div class="item-header" data-lang="en">
+                    <span class="item-title">Hong Kong Institute of Vocational Education (Sha Tin) - Higher Diploma in Network and Mobile Computing</span>
                     <span class="item-date">2011 – 2015</span>
                 </div>
             </div>
 
             <div class="item">
-                <div class="item-header">
-                    <span class="item-title" data-lang="zh">香港專業教育學院（沙田） - 商業資訊科技高級文憑（網頁設計及開發）</span>
-                    <span class="item-title" data-lang="en">Hong Kong Institute of Vocational Education (Sha Tin) - Higher Diploma in IT for Business (Web Design & Development)</span>
+                <div class="item-header" data-lang="zh">
+                    <span class="item-title">香港專業教育學院（沙田） - 商業資訊科技高級文憑（網頁設計及開發）</span>
+                    <span class="item-date">2008 – 2011</span>
+                </div>
+                <div class="item-header" data-lang="en">
+                    <span class="item-title">Hong Kong Institute of Vocational Education (Sha Tin) - Higher Diploma in IT for Business (Web Design & Development)</span>
                     <span class="item-date">2008 – 2011</span>
                 </div>
             </div>
 
             <div class="item">
-                <div class="item-header">
-                    <span class="item-title" data-lang="zh">地利亞修女紀念學校（月華） - 香港中學會考 (HKCEE)</span>
-                    <span class="item-title" data-lang="en">Delia Memorial School (Yuet Wah) - HKCEE</span>
+                <div class="item-header" data-lang="zh">
+                    <span class="item-title">地利亞修女紀念學校（月華） - 香港中學會考 (HKCEE)</span>
+                    <span class="item-date">2006 – 2008</span>
+                </div>
+                <div class="item-header" data-lang="en">
+                    <span class="item-title">Delia Memorial School (Yuet Wah) - HKCEE</span>
                     <span class="item-date">2006 – 2008</span>
                 </div>
             </div>
@@ -337,9 +353,12 @@
             <h2 data-lang="en">Work Experience</h2>
 
             <div class="item">
-                <div class="item-header">
-                    <span class="item-title" data-lang="zh">香港道教聯合會青松中學</span>
-                    <span class="item-title" data-lang="en">The Hong Kong Taoist Association Ching Chung Secondary School</span>
+                <div class="item-header" data-lang="zh">
+                    <span class="item-title">香港道教聯合會青松中學</span>
+                    <span class="item-date">2015 – 2022</span>
+                </div>
+                <div class="item-header" data-lang="en">
+                    <span class="item-title">The Hong Kong Taoist Association Ching Chung Secondary School</span>
                     <span class="item-date">2015 – 2022</span>
                 </div>
                 <div class="item-subtitle" data-lang="zh">全職 IT 助理</div>
@@ -357,9 +376,12 @@
             </div>
 
             <div class="item">
-                <div class="item-header">
-                    <span class="item-title" data-lang="zh">藝安物業及護衛服務有限公司</span>
-                    <span class="item-title" data-lang="en">Star Security</span>
+                <div class="item-header" data-lang="zh">
+                    <span class="item-title">藝安物業及護衛服務有限公司</span>
+                    <span class="item-date">2008 – 2015</span>
+                </div>
+                <div class="item-header" data-lang="en">
+                    <span class="item-title">Star Security</span>
                     <span class="item-date">2008 – 2015</span>
                 </div>
                 <div class="item-subtitle" data-lang="zh">兼職保安員</div>
@@ -387,7 +409,7 @@
             </ul>
         </section>
 
-	<!-- Technical Skills -->
+        <!-- Technical Skills -->
         <section>
             <h2 data-lang="zh">專業技能</h2>
             <h2 data-lang="en">Technical Skills</h2>
