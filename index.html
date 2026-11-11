@@ -9,6 +9,7 @@
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     
     <style>
+        /* ☀️ 預設：亮麗模式 (Light Mode) */
         :root {
             --primary-color: #2c3e50;
             --accent-color: #3498db;
@@ -17,6 +18,28 @@
             --text-color: #333333;
             --light-text: #666666;
             --border-color: #e1e8ed;
+            --header-bg: rgba(255, 255, 255, 0.65);
+            --header-border: rgba(255, 255, 255, 0.5);
+            --header-shadow: rgba(0, 0, 0, 0.08);
+            --btn-bg: rgba(248, 249, 250, 0.9);
+            --watermark-color: %233498db; /* 水印顏色 */
+        }
+        /* 🌙 當用戶系統開啟黑暗模式 (Dark Mode) 時自動生效 */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --primary-color: #ecf0f1;
+                --accent-color: #5dade2;
+                --bg-color: #121212;
+                --card-bg: #1e1e1e;
+                --text-color: #e0e0e0;
+                --light-text: #a0a0a0;
+                --border-color: #333333;
+                --header-bg: rgba(30, 30, 30, 0.65); /* 黑色透光膠囊 */
+                --header-border: rgba(255, 255, 255, 0.15);
+                --header-shadow: rgba(0, 0, 0, 0.3);
+                --btn-bg: rgba(45, 45, 45, 0.9);
+                --watermark-color: %235dade2;
+            }
         }
 
         * {
@@ -41,29 +64,37 @@
             -ms-user-select: none;
             user-select: none;
         }
-
-        /* 📌 置頂滿版半透明懸浮 Header */
+        /* 📌 iOS 膠囊風毛玻璃懸浮 Header（支援深淺色切換） */
         header {
             position: fixed;
             top: 15px;
             left: 50%;
-            transform: translate(-50%);
+            transform: translateX(-50%);
             width: calc(100% - 30px);
-            max-width: 800px
-                
-            background: rgba(255, 255, 255, 0.65);
+            max-width: 800px;
+            background: var(--header-bg);
             backdrop-filter: blur(20px) saturate(180%);
             -webkit-backdrop-filter: blur(20px) saturate(180%);
-            
             border-radius: 30px;
-            border: px solid rgba(255, 255, 255, 0.5);
-
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08),
-                		inset 0 1px 1px rgba(255, 255, 255, 0.6);
+            border: 1px solid var(--header-border);
+            box-shadow: 0 10px 30px var(--header-shadow),
+                inset 0 1px 1px rgba(255, 255, 255, 0.2);
             padding: 12px 20px;
             z-index: 1000;
-            
+            transition: background 0.3s, border-color 0.3s;
         }
+        /* 通訊按鈕背景適應主題 */
+        .social-link-item {
+            background-color: var(--btn-bg);
+            color: var(--primary-color);
+            border: 1px solid var(--border-color);
+        }
+        /* 雙語按鈕背景適應主題 */
+        .lang-switch {
+            background: var(--btn-bg);
+            border: 1px solid var(--border-color);
+        }
+
 
         .header-container {
             max-width: 800px;
